@@ -1,53 +1,113 @@
 var cWidth = window.innerWidth;
-var cHeight = window.innerHeight;
+var cHeight = window.innerHeight - 60;
 var colors2 = ["#fde74c","#ffbb32",  "#fa7921", "#f93416","#ff1654","#f3ffbd","#b2dbbf","#247ba0","#06d6a0"];
-var colors2 = ["#fff001","#ff0101","#0101fd","#f9f9f9","#f9f9f9","#f9f9f9","#f9f9f9"]
-var rectangleColors = ["#ffffff"];
+var colors2 = ["#fff001","#ff0101","#0101fd","#f9f9f9","#f9f9f9","#f9f9f9","#f9f9f9","#30303a"]
+var rectangleColors = [];
 
-var single = true;
+var clear = false;
 $(document).on("ready",function(){
   $("#reset").on("click",function(){
     //reset colors
-    rectangleColors = ["#ffffff"];
+    rectangleColors = [];
     
     //Reset rectangles
     cWidth = window.innerWidth;
-    cHeight = window.innerHeight;
-    rectangles = [[0,0,cWidth,cHeight]];
-
+    cHeight = window.innerHeight- 60;
+    rectangles = [];
+    background(255,255,255)
   })
   
   $("#generate").on("click",function(){
-    generateRectangles(rectangles,60);
-  })
-  $(document).mousemove(function(e){
+    rectangles = [];
+    background(255,255,255)
 
+    rectangles = generateStartRectangles(5);
+    displayRectangles(rectangles);
+    generateRectangles(rectangles,60);
+    //generateRectangles(rectangles,60);
+  })
+  $("#download").on("click",function(){
+    saveCanvas(rCanvas,"MondrianArt.png")
+  })
+  $(window).resize(function() {
+    cWidth = window.innerWidth;
+    cHeight = window.innerHeight - 60;
+    rCanvas = createCanvas(cWidth,cHeight);
+    rCanvas.parent("display");
+    clear =true;
+    background(255,255,255);
+    //stroke(10,10,10)
+    strokeWeight(5);
   });
   
 });
 var rCanvas;
 function setup(){
+  noStroke();
   rCanvas = createCanvas(cWidth,cHeight);
   rCanvas.parent("display");
   background(255,255,255);
-  stroke(255,255,255)
-  stroke(48,48,58)
+
+  //stroke(10,10,10)
   strokeWeight(5);
 }
 
 function draw(){
-  if (single != true){
+  if (clear == true){
+    clear = false;
     background(255,255,255);
   }
   for (var i = rectangles.length-1; i>=0;i--){
     if (pointInRect(mouseX,mouseY,rectangles[i])){
+      stroke(10,10,10);
       fill(rectangleColors[i]);
       rect(rectangles[i][0],rectangles[i][1],rectangles[i][2],rectangles[i][3])
     }
   }
 }
-var rectangles = [[0,0,cWidth,cHeight]];
+var rectangles = [];
 var count = 0;
+function generateStartRectangles(mc){
+  var rectArr = [];
+  var updown = round(random(0,1) * (mc - 1)) + 1;
+  var leftright = round(random(0,1) * (mc - 1)) + 1;
+  
+  var pos = 10;
+  var cws = [10];
+  var chs = [10];
+  for (var i = 0; i<updown;i++){
+    var cw = max(round(random(0,1) * ((cWidth-10)/updown)), 20);
+    cws.push(cw + pos)
+    pos += cw;
+  }
+  pos = 10;
+  for (var i = 0; i<leftright;i++){
+    var ch = max(round(random(0,1) * ((cHeight-10)/updown)), 20);
+    chs.push(ch + pos)
+    pos += ch;
+  }
+  var px=0;
+  var py=0;
+  for (var i = 0; i < updown; i++){
+    for (var j = 0; j < leftright; j++){
+      if (j < leftright -1 && i < updown -1){
+        rectArr.push([cws[i],chs[j],cws[i+1]-cws[i],chs[j+1]-chs[j]]);
+      }
+      else if (j == leftright -1 && i < updown -1){
+        rectArr.push([cws[i],chs[j],cws[i+1]-cws[i],cHeight-10-chs[j]]);
+      }
+      else if (j < leftright -1 && i == updown -1){
+        rectArr.push([cws[i],chs[j],cWidth-10 - cws[i],chs[j+1]-chs[j]]);
+      }
+      else {
+        rectArr.push([cws[i],chs[j],cWidth-10 - cws[i], cHeight-10-chs[j]]);
+      }
+    }
+  }
+  //console.log(updown,leftright,rectArr)
+  return rectArr;
+  
+}
 function generateRectangles(rectArr, max){
   if (count < max){
     
@@ -97,7 +157,6 @@ function generateRectangles(rectArr, max){
       return generateRectangles(rectArr,max);
     }
     rectArr.splice(randomIndex,1);
-    console.log(rectArr.slice(0));
     max--;
     //console.log(rectArr,"after")
     return generateRectangles(rectArr,max);

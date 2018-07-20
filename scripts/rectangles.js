@@ -1,6 +1,7 @@
 var cWidth = window.innerWidth;
 var cHeight = window.innerHeight;
 var colors2 = ["#fde74c","#ffbb32",  "#fa7921", "#f93416","#ff1654","#f3ffbd","#b2dbbf","#247ba0","#06d6a0"];
+var colors2 = ["#fff001","#ff0101","#0101fd","#f9f9f9","#f9f9f9","#f9f9f9","#f9f9f9"]
 var rectangleColors = ["#ffffff"];
 
 var single = true;
@@ -30,6 +31,7 @@ function setup(){
   rCanvas.parent("display");
   background(255,255,255);
   stroke(255,255,255)
+  stroke(48,48,58)
   strokeWeight(5);
 }
 

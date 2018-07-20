@@ -1,6 +1,24 @@
 body {
-
+  cursor:crosshair
 }
 .container{
 
+}
+#display {
+  z-index:0;
+}
+#reset, #generate {
+  position: fixed;
+  z-index: 10;
+  color:RGB(50,50,50);
+  bottom:10px;
+  text-align: center;
+  margin-left:50%;
+  transform: translate(-50%,0);
+  cursor:pointer;
+  border: 2px dashed RGB(50,50,50);
+}
+#generate {
+  bottom:50px;
+  border: 2px dashed RGB(50,50,50);
 }

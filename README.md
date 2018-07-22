@@ -1,5 +1,5 @@
 # Mondrian Art Generator
-Draw Mondrian-esque art by clicking generate, and hover your mouse around the white canvas to draw the art
+Draw Mondrian-esque art by clicking generate, and hover your mouse around the white canvas to draw the art. Click rectanges to change their colors.
 
 Working demo provided here https://stonet2000.github.io/Mondrian-Generator/
 

@@ -1,7 +1,7 @@
 var cWidth = window.innerWidth;
 var cHeight = window.innerHeight - 60;
-var colors2 = ["#fde74c","#ffbb32",  "#fa7921", "#f93416","#ff1654","#f3ffbd","#b2dbbf","#247ba0","#06d6a0"];
 var colors2 = ["#fff001","#ff0101","#0101fd","#f9f9f9","#f9f9f9","#f9f9f9","#f9f9f9","#30303a"]
+var colorsUnique = ["#fff001", "#ff0101", "#0101fd", "#f9f9f9", "#30303a"]
 var rectangleColors = [];
 
 var clear = false;
@@ -67,6 +67,26 @@ function draw(){
 }
 var rectangles = [];
 var count = 0;
+function mousePressed(){
+  console.log("press")
+  for (var i = rectangles.length-1; i>=0;i--){
+    if (pointInRect(mouseX,mouseY,rectangles[i])){
+      var currColor = rectangleColors[i];
+      var currIndex = 0;
+      for (var k = 0; k<colorsUnique.length;k ++){
+        //Find index of color
+        if (colorsUnique[k] == rectangleColors[i]){
+          currIndex = k;
+          break;
+        }
+      }
+      rectangleColors[i] = colorsUnique[ (k+1) % colorsUnique.length];
+      break;
+
+    }
+  }
+}
+
 function generateStartRectangles(mc){
   var rectArr = [];
   var updown = round(random(0,1) * (mc - 1)) + 1;
@@ -122,7 +142,7 @@ function generateRectangles(rectArr, max){
     //console.log(rectArr,"before")
     if (random(0,1) <= 0.5){
       //split left right
-      yv = round (random(0,1) * (chosenRect[3]));
+      yv = round (random(0,1) * (chosenRect[3]) / 30) * 30;
       //if too small, redo
       if (yv < 50 || chosenRect[3] - yv < 50){
         max--;
@@ -130,7 +150,7 @@ function generateRectangles(rectArr, max){
       }
     }
     else {
-      xv = round (random (0,1) * (chosenRect[2]));
+      xv = round (random (0,1) * (chosenRect[2]) / 30) * 30;
       if (xv < 50 || chosenRect[2] - xv < 50){
         max--;
         return generateRectangles(rectArr, max);

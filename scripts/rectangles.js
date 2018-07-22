@@ -68,7 +68,7 @@ function draw(){
 var rectangles = [];
 var count = 0;
 function mousePressed(){
-  console.log("press")
+
   for (var i = rectangles.length-1; i>=0;i--){
     if (pointInRect(mouseX,mouseY,rectangles[i])){
       var currColor = rectangleColors[i];

@@ -91,7 +91,6 @@ button:focus {outline:0;}
   z-index:5;
   text-align: left;
   color:RGB(50,50,50);
-  transition: transform 1s;
 
 }
 .footer a{

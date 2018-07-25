@@ -36,3 +36,11 @@ body {
   cursor:pointer;
   border: 2px dashed RGB(50,50,50);
 }
+
+@media only screen and (max-width:800px){
+  #buttons {
+    bottom:30px;
+    font-size:14px;
+  }
+  
+}
